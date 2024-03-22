@@ -34,11 +34,20 @@ function execWorkflow() {
             const element = createElement(elementString);
             const post = document.querySelector(
                 ".css-1rynq56.r-bcqeeo.r-qvutc0.r-37j5jr.r-1inkyih.r-16dba41.r-bnwqim.r-135wba7[data-testid=tweetText] span"
-            ).innerHTML;
+            );
+
             element.addEventListener("click", () => {
-                const url = encodeURI(
-                    "https://bsky.app/intent/compose?text=" + post + " " + location.href
-                );
+                let url = "";
+                if (post === null) {
+                    url = encodeURI("https://bsky.app/intent/compose?text=" + location.href);
+                } else {
+                    url = encodeURI(
+                        "https://bsky.app/intent/compose?text=" +
+                            post.innerHTML +
+                            " " +
+                            location.href
+                    );
+                }
                 window.open(url);
             });
 
