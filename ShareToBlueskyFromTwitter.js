@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Share to Bluesky from Twitter
 // @namespace    https://yahoo.co.jp
-// @version      1.0.2
+// @version      1.0.4
 // @description  Twitter（現X）のポストをBlueskyに共有するボタンを追加します
 // @author       インターネット老人会メンバー
 // @license      MIT
