@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Share to Bluesky from Twitter
 // @namespace    https://yahoo.co.jp
-// @version      1.0.4
+// @version      1.0.5
 // @description  Twitter（現X）のポストをBlueskyに共有するボタンを追加します
 // @author       インターネット老人会メンバー
 // @license      MIT
@@ -29,12 +29,12 @@ function addBlueskyButton(menu) {
 
     element.addEventListener("click", () => {
         let url = "";
-        if (post === null) {
-            url = encodeURI("https://bsky.app/intent/compose?text=" + location.href);
-        } else {
+        if (post) {
             url = encodeURI(
                 "https://bsky.app/intent/compose?text=" + post.innerText + " " + location.href
             );
+        } else {
+            url = encodeURI("https://bsky.app/intent/compose?text=" + location.href);
         }
         window.open(url);
     });
@@ -42,7 +42,7 @@ function addBlueskyButton(menu) {
     menu.insertAdjacentElement("beforeend", element);
 }
 
-function waitForMenu() {
+function waitForMenu(layerElement) {
     const menuObserver = new MutationObserver((mutations) => {
         mutations.forEach(() => {
             const menuElement = document.querySelector(
@@ -54,8 +54,6 @@ function waitForMenu() {
         });
     });
 
-    const layerElement = document.querySelector("#layers");
-
     menuObserver.observe(layerElement, { childList: true, subtree: true });
 }
 
@@ -64,7 +62,7 @@ const layersObserver = new MutationObserver((mutations) => {
     mutations.forEach(() => {
         const layerElement = document.querySelector("#layers");
         if (layerElement) {
-            waitForMenu();
+            waitForMenu(layerElement);
             layersObserver.disconnect();
         }
     });
